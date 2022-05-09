@@ -1,10 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import MovieCard from "./MovieCard";
 import { BiCameraMovie } from "react-icons/bi";
 
-function Watchlist() {
-    const {watchlist} = useContext(GlobalContext);
+const initialState = [];
+const Watchlist = () => {
+    const {watchlist , removeMoviesFromWatchList, addMoviesToWatched} = useContext(GlobalContext);
+    const [moviesselect, setMoviesselect] = useState(initialState);
+
+    const seleccionar = (id) => {
+        let exist = moviesselect.includes (id);
+
+        if (exist){
+            let movies = moviesselect.filter((el) => el !== id);
+            setMoviesselect(movies);
+        } else {
+            setMoviesselect([...moviesselect, id]);
+        }
+    }
+
     return ( 
         <>
             <div className="movie">
@@ -20,10 +34,47 @@ function Watchlist() {
                         </span>
                     </div>
 
+                    <div className="movie__event">
+                        {moviesselect.length > 0 ? 
+                            (
+                                <>
+                                    <button 
+                                        className="btn btn--margin" 
+                                        onClick={() => 
+                                            {
+                                                addMoviesToWatched(moviesselect); 
+                                                removeMoviesFromWatchList(moviesselect);
+                                                setMoviesselect (initialState);
+                                            }
+                                        }
+                                    >
+                                        Move to Watched
+                                    </button>
+                                    <button 
+                                        className="btn"
+                                        onClick={() => 
+                                            {
+                                                removeMoviesFromWatchList(moviesselect); 
+                                                setMoviesselect (initialState);
+                                            }
+                                        }
+                                    >
+                                        Remove to Watchlist
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <button className="btn btn--margin" disabled={true}>Move to Watched</button>
+                                    <button className="btn" disabled={true}>Remove to Watchlist</button>
+                                </>
+                            )
+                        }
+                    </div>
+
                     {watchlist.length > 0 ? (
                         <div className="movie__grid">
                             {watchlist.map((movie) => (
-                                <MovieCard movie={movie} type="watchlist" />
+                                <MovieCard movie={movie} seleccionar={seleccionar} moviesselect={moviesselect} type="watchlist" />
                             ))}
                         </div>
                     ) : (

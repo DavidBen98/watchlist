@@ -20,9 +20,9 @@ const Header = () => {
                     </li>
 
                     <li>
-                        <Link to="/add" className="btn">
+                        <Link to="/add" className="btn btn--invertColor">
                             Add
-                            <IconContext.Provider value={{ color: "#E6E6E6", style: { verticalAlign: 'textTop' }}}>
+                            <IconContext.Provider value={{ color: "var(--secondary)", style: { verticalAlign: 'textTop' }}}>
                                 <MdAdd />
                             </IconContext.Provider>
                         </Link>

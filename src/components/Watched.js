@@ -1,10 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import MovieCard from "./MovieCard";
 import { BiCameraMovie } from "react-icons/bi";
 
 const Watched = () => {
     const { watched } = useContext(GlobalContext);
+    const [moviesselect, setMoviesselect] = useState([]);
+
+    const seleccionar = (id, evento) => {
+        if (evento === "add"){
+            setMoviesselect( 
+                [
+                ...moviesselect, 
+                id
+            ]);
+        } else {
+            let movies = moviesselect.filter((el) => el !== id);
+            setMoviesselect(movies);
+        }
+    }
 
     return ( 
         <div className="movie">
@@ -20,10 +34,26 @@ const Watched = () => {
                     </span>
                 </div>
 
+                <div className="movie__event">
+                    {moviesselect.length > 0 ? 
+                        (
+                            <>
+                                <button className="btn btn--margin">Move to Watched</button>
+                                <button className="btn">Remove to Watchlist</button>
+                            </>
+                        ) : (
+                            <>
+                                <button className="btn btn--margin" disabled={true}>Move to Watched</button>
+                                <button className="btn" disabled={true}>Remove to Watchlist</button>
+                            </>
+                        )
+                    }
+                </div>
+
                 {watched.length > 0 ? (
                     <div className="movie__grid">
                         {watched.map((movie) => (
-                            <MovieCard movie={movie} type="watched" />
+                            <MovieCard movie={movie} seleccionar={seleccionar} type="watched" />
                         ))}
                     </div>
                 ) : (
@@ -33,7 +63,7 @@ const Watched = () => {
 
             </div>
         </div>
-     );
+    );
 }
  
 export default Watched;

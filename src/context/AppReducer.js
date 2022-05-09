@@ -10,25 +10,51 @@ export default (state, action) => {
                 ...state,
                 watchlist: state.watchlist.filter(movie => movie.id !== action.payload)
             }
-            case "ADD_MOVIE_TO_WATCHED":
-                return {
-                    ...state,
-                    watchlist: state.watchlist.filter(
-                        (movie) => movie.id !== action.payload.id
-                    ),
-                    watched: [action.payload, ...state.watched],
+        case "REMOVE_MOVIES_FROM_WATCHLIST":
+            return {
+                ...state,
+                watchlist: state.watchlist.filter ((movie) => (
+                                action.payload.every((select) => (
+                                    movie.id !== select
+                                ))
+                            ))
+            }
+        case "ADD_MOVIE_TO_WATCHED":
+            return {
+                ...state,
+                watchlist: state.watchlist.filter(
+                    (movie) => movie.id !== action.payload.id
+                ),
+                watched: [action.payload, ...state.watched],
+            }
+        case "ADD_MOVIES_TO_WATCHED":
+            let newWatched = [];
+
+            for (let i = 0; i < action.payload.length; i++){
+                for (let j = 0; j < state.watchlist.length; j++){
+                    if (state.watchlist[j].id === action.payload[i]){
+                        newWatched.push(state.watchlist[j]);
+                    }
                 }
-            case "MOVE_TO_WATCHLIST" :
-                return {
-                    ...state,
-                    watched: state.watched.filter ( movie => movie.id !== action.payload.id),
-                    watchlist: [action.payload, ...state.watchlist]
-                }
-            case "REMOVE_FROM_WATCHED" :
-                return {
-                    ...state,
-                    watched: state.watched.filter (movie => movie.id !== action.payload)
-                }
+            }
+        
+            newWatched = newWatched.concat(state.watched);
+
+            return {
+                ...state,
+                watched: newWatched
+            }
+        case "MOVE_TO_WATCHLIST" :
+            return {
+                ...state,
+                watched: state.watched.filter ( movie => movie.id !== action.payload.id),
+                watchlist: [action.payload, ...state.watchlist]
+            }
+        case "REMOVE_FROM_WATCHED" :
+            return {
+                ...state,
+                watched: state.watched.filter (movie => movie.id !== action.payload)
+            }
         default: 
             return state;
 
