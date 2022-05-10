@@ -246,12 +246,13 @@ header .header__nav li:last-child {
   margin-bottom: 30px;
 }
 
-.movie__event{
+.movie__event, .movie__buttons{
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
-  margin: 2%;
+  margin: 1% 2% 2% 2%;
 }
 
 .movie__count {
@@ -277,6 +278,20 @@ header .header__nav li:last-child {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
+}
+
+.movie .movie__empty {
+  color: var(--secondary);
+  font-size: 3rem;
+  text-align: center;
+}
+
+.movie__select{
+  color: var(--secondary);
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  font-size: 1.1rem;
 }
 
 @media (min-width: 992px) {
@@ -346,8 +361,3 @@ header .header__nav li:last-child {
   cursor: pointer;
 }
 
-.movie .movie__empty {
-  color: var(--secondary);
-  font-size: 3rem;
-  text-align: center;
-}

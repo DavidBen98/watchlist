@@ -35,6 +35,12 @@ const Watchlist = () => {
                     </div>
 
                     <div className="movie__event">
+                        <p className="movie__select">
+                            <span>
+                                {moviesselect.length} selected film
+                            </span>
+                        </p>
+                        <div className="movie__buttons">
                         {moviesselect.length > 0 ? 
                             (
                                 <>
@@ -69,6 +75,7 @@ const Watchlist = () => {
                                 </>
                             )
                         }
+                        </div>
                     </div>
 
                     {watchlist.length > 0 ? (

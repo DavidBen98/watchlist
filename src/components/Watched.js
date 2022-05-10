@@ -36,6 +36,13 @@ const Watched = () => {
                 </div>
 
                 <div className="movie__event">
+                    <p className="movie__select">
+                        <span>
+                            {moviesselect.length} selected film
+                        </span>
+                    </p>
+                    <div className="movie__buttons">
+
                     {moviesselect.length > 0 ? 
                         (
                             <>
@@ -48,7 +55,7 @@ const Watched = () => {
                                             setMoviesselect (initialState);
                                         }
                                     }
-                                >
+                                    >
                                     Move to Watchlist
                                 </button>
                                 <button 
@@ -59,7 +66,7 @@ const Watched = () => {
                                             setMoviesselect (initialState);
                                         }
                                     }
-                                >
+                                    >
                                     Remove to Watched
                                 </button>
                             </>
@@ -70,6 +77,7 @@ const Watched = () => {
                             </>
                         )
                     }
+                    </div>
                 </div>
 
                 {watched.length > 0 ? (
