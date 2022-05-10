@@ -19,6 +19,15 @@ export default (state, action) => {
                                 ))
                             ))
             }
+        case "REMOVE_MOVIES_FROM_WATCHED":
+            return {
+                ...state,
+                watched: state.watched.filter ((movie) => (
+                                action.payload.every((select) => (
+                                    movie.id !== select
+                                ))
+                            ))
+            }
         case "ADD_MOVIE_TO_WATCHED":
             return {
                 ...state,
@@ -44,6 +53,23 @@ export default (state, action) => {
                 ...state,
                 watched: newWatched
             }
+        case "ADD_MOVIES_TO_WATCHLIST":
+        let newWatchlist = [];
+
+        for (let i = 0; i < action.payload.length; i++){
+            for (let j = 0; j < state.watched.length; j++){
+                if (state.watched[j].id === action.payload[i]){
+                    newWatchlist.push(state.watched[j]);
+                }
+            }
+        }
+        
+        newWatchlist = newWatchlist.concat(state.watchlist);
+
+        return {
+            ...state,
+            watchlist: newWatchlist
+        }
         case "MOVE_TO_WATCHLIST" :
             return {
                 ...state,

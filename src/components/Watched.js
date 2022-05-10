@@ -3,20 +3,21 @@ import { GlobalContext } from "../context/GlobalState";
 import MovieCard from "./MovieCard";
 import { BiCameraMovie } from "react-icons/bi";
 
-const Watched = () => {
-    const { watched } = useContext(GlobalContext);
-    const [moviesselect, setMoviesselect] = useState([]);
+const initialState = [];
 
-    const seleccionar = (id, evento) => {
-        if (evento === "add"){
-            setMoviesselect( 
-                [
-                ...moviesselect, 
-                id
-            ]);
-        } else {
+const Watched = () => {
+    const { watched, removeMoviesFromWatched, addMoviesToWatchlist } = useContext(GlobalContext);
+
+    const [moviesselect, setMoviesselect] = useState(initialState);
+
+    const seleccionar = (id) => {
+        let exist = moviesselect.includes (id);
+
+        if (exist){
             let movies = moviesselect.filter((el) => el !== id);
             setMoviesselect(movies);
+        } else {
+            setMoviesselect([...moviesselect, id]);
         }
     }
 
@@ -38,13 +39,34 @@ const Watched = () => {
                     {moviesselect.length > 0 ? 
                         (
                             <>
-                                <button className="btn btn--margin">Move to Watched</button>
-                                <button className="btn">Remove to Watchlist</button>
+                                <button 
+                                    className="btn btn--margin" 
+                                    onClick={() => 
+                                        {
+                                            addMoviesToWatchlist(moviesselect); 
+                                            removeMoviesFromWatched(moviesselect);
+                                            setMoviesselect (initialState);
+                                        }
+                                    }
+                                >
+                                    Move to Watchlist
+                                </button>
+                                <button 
+                                    className="btn"
+                                    onClick={() => 
+                                        {
+                                            removeMoviesFromWatched(moviesselect); 
+                                            setMoviesselect (initialState);
+                                        }
+                                    }
+                                >
+                                    Remove to Watched
+                                </button>
                             </>
                         ) : (
                             <>
-                                <button className="btn btn--margin" disabled={true}>Move to Watched</button>
-                                <button className="btn" disabled={true}>Remove to Watchlist</button>
+                                <button className="btn btn--margin" disabled={true}>Move to Watchlist</button>
+                                <button className="btn" disabled={true}>Remove to Watched</button>
                             </>
                         )
                     }
@@ -53,14 +75,12 @@ const Watched = () => {
                 {watched.length > 0 ? (
                     <div className="movie__grid">
                         {watched.map((movie) => (
-                            <MovieCard movie={movie} seleccionar={seleccionar} type="watched" />
+                            <MovieCard movie={movie} seleccionar={seleccionar} moviesselect={moviesselect} type="watched" />
                         ))}
                     </div>
                 ) : (
                     <h2 className="movie__empty">No movies in watched</h2>
                 )}
-                
-
             </div>
         </div>
     );

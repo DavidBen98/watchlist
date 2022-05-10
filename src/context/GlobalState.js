@@ -28,12 +28,20 @@ export const GlobalProvider = (props) => {
         dispatch({type: "REMOVE_MOVIES_FROM_WATCHLIST", payload: movies});
     }
 
+    const removeMoviesFromWatched = (movies) => {
+        dispatch({type: "REMOVE_MOVIES_FROM_WATCHED", payload: movies});
+    }
+
     const addMovieToWatched = (movie) => {
         dispatch({type: "ADD_MOVIE_TO_WATCHED", payload: movie});
     }
 
     const addMoviesToWatched = (movies) => {
         dispatch({type: "ADD_MOVIES_TO_WATCHED", payload: movies});
+    }
+
+    const addMoviesToWatchlist= (movies) => {
+        dispatch({type: "ADD_MOVIES_TO_WATCHLIST", payload: movies});
     }
 
     const moveToWatchList =  (movie) => {
@@ -56,6 +64,8 @@ export const GlobalProvider = (props) => {
                 removeFromWatched,
                 removeMoviesFromWatchList,
                 addMoviesToWatched,
+                addMoviesToWatchlist,
+                removeMoviesFromWatched,
             }}>
 
             {props.children}
