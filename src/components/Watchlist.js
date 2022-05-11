@@ -51,7 +51,7 @@ const Watchlist = () => {
                             (
                                 <>
                                     <button 
-                                        className="btn btn--margin" 
+                                        className="btn" 
                                         onClick={() => 
                                             {
                                                 addMoviesToWatched(moviesselect); 
@@ -76,7 +76,7 @@ const Watchlist = () => {
                                 </>
                             ) : (
                                 <>
-                                    <button className="btn btn--margin" disabled={true}>Move to Watched</button>
+                                    <button className="btn" disabled={true}>Move to Watched</button>
                                     <button className="btn" disabled={true}>Remove to Watchlist</button>
                                 </>
                             )
