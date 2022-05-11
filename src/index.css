@@ -30,7 +30,7 @@ body {
 }
 
 ::placeholder{
-  color: var(--white);
+  color: var(--primary);
 }
 
 .add{
@@ -317,6 +317,8 @@ header .header__nav li:last-child {
 .card img {
   width: 100%;
   display: block;
+  height: 100%;
+  object-fit: cover;
 }
 
 .card .card__overlay {
