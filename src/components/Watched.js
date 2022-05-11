@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import MovieCard from "./MovieCard";
 import { BiCameraMovie } from "react-icons/bi";
@@ -20,6 +20,12 @@ const Watched = () => {
             setMoviesselect([...moviesselect, id]);
         }
     }
+
+    useEffect(() => {
+        if (moviesselect.length > 0){
+            setMoviesselect(initialState);
+        }
+    }, [watched]);
 
     return ( 
         <div className="movie">

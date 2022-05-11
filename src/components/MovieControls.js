@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 
-const MovieControls = ({ movie, type}) => {
+const MovieControls = ({ movie, type, seleccionar}) => {
     const { 
         removeMovieFromWatchList, 
         addMovieToWatched,
@@ -16,7 +16,9 @@ const MovieControls = ({ movie, type}) => {
                 <>
                     <button 
                         className="card__btn"
-                        onClick={()=> addMovieToWatched(movie)}
+                        onClick={()=> {
+                            addMovieToWatched(movie);
+                        }}
                     >
                         <i className="fa-fw far fa-eye">
                             <FaEye />
@@ -25,7 +27,9 @@ const MovieControls = ({ movie, type}) => {
 
                     <button 
                         className="card__btn"
-                        onClick={()=> removeMovieFromWatchList(movie.id)}
+                        onClick={()=> {
+                            removeMovieFromWatchList(movie.id);
+                        }}
                     >
                         <i className="fa-fw fa fa-times">
                             <FaTimes />

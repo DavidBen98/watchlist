@@ -1,5 +1,4 @@
 import MovieControls from "./MovieControls";
-import { useState, useEffect } from "react";
 
 const MovieCard = ({ movie, type, seleccionar, moviesselect }) => {
     const handleClick = (id) => {
@@ -15,32 +14,32 @@ const MovieCard = ({ movie, type, seleccionar, moviesselect }) => {
         <>
             {select?
                 (
-                    <div className="card" onClick={()=> handleClick(movie.id)} style={{border: "3px solid var(--secondary)"}}>
-                        <div className="card__overlay"></div>
+                    <div className="card" style={{border: "3px solid var(--secondary)"}}>
+                        <div className="card__overlay" onClick={()=> handleClick(movie.id)}></div>
 
                         {movie.poster_path ? (
                             <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                            alt={`${movie.title} Poster`} />
+                            alt={`${movie.title} Poster`}/>
                             ) : (
                                 <div className="card__filler">
-                            </div>
+                                </div>
                         )}
 
-                        <MovieControls type={type} movie={movie} />
+                        <MovieControls type={type} movie={movie}/>
                     </div>
                 ) : (
-                    <div className="card" onClick={()=> handleClick(movie.id)} >
-                        <div className="card__overlay"></div>
+                    <div className="card" >
+                        <div className="card__overlay" onClick={()=> handleClick(movie.id)}></div>
 
                         {movie.poster_path ? (
-                            <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                            <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} 
                             alt={`${movie.title} Poster`} />
                             ) : (
                                 <div className="card__filler">
                             </div>
                         )}
 
-                        <MovieControls type={type} movie={movie} />
+                        <MovieControls type={type} movie={movie}/>
                     </div>
                 )
                 
