@@ -210,7 +210,7 @@ header .header__nav li:last-child {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 40%;
+  width: 40%;
 }
 
 .resultCard .resultCard__info .resultCard__title {
