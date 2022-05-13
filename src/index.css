@@ -195,8 +195,7 @@ header .header__nav li:last-child {
   justify-content: center;
 }
 
-.resultCard .resultCard__wrapper img, .card__filler,
-.card__filler img {
+.resultCard .resultCard__wrapper img {
   width: 75px;
   height: 113px;
   background-color: #dbdada;
