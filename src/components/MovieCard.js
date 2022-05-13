@@ -1,4 +1,5 @@
 import MovieControls from "./MovieControls";
+import Poster from "../Poster.jpg";
 
 const MovieCard = ({ movie, type, seleccionar, moviesselect }) => {
     const handleClick = (id) => {
@@ -22,6 +23,7 @@ const MovieCard = ({ movie, type, seleccionar, moviesselect }) => {
                             alt={`${movie.title} Poster`}/>
                             ) : (
                                 <div className="card__filler">
+                                    <img src={Poster} alt={`${movie.title} Poster`}/>
                                 </div>
                         )}
 
@@ -36,7 +38,8 @@ const MovieCard = ({ movie, type, seleccionar, moviesselect }) => {
                             alt={`${movie.title} Poster`} />
                             ) : (
                                 <div className="card__filler">
-                            </div>
+                                    <img src={Poster} alt={`${movie.title} Poster`}/>
+                                </div>
                         )}
 
                         <MovieControls type={type} movie={movie}/>

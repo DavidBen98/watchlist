@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
+import Poster from "../Poster.jpg";
 
 const ResultCard = ({ movie }) => {
     const {
@@ -23,6 +24,7 @@ const ResultCard = ({ movie }) => {
                     alt={`${movie.title} Poster`} />
                 ) : (
                     <div className="card__filler">
+                        <img src={Poster} alt={`${movie.title} Poster`}/>
                     </div>
                 )}
             </div>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ResultCard from "./ResultCard";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useDebounce } from "../hooks/useDebounce";
+import debounceFunction from "./debounceFunction";
 
 const Add = () => {
     const [query, setQuery] = useState("");
@@ -9,37 +9,36 @@ const Add = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
 
-    const getMovie = (inputValue, changePage) => {
-        let location = "search";
-        let numberPage = (changePage? page : "1");
-        let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&query=${inputValue}&page=${numberPage}`;
+    const debouncedFetchData = useMemo (function () {
+        function getMovie (inputValue, pag) {
 
-        if (inputValue === "" || inputValue === undefined){
-            url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=${numberPage}`;
+            let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&query=${inputValue}&page=${pag}`;
+            
+            if (inputValue === "" || inputValue === undefined){
+                url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=${pag}`;
+            }
+        
+            fetch(url)
+            .then(res => res.json()).then((data)=> {
+                if(!data.errors){
+                    if (pag !== 1){
+                        setResults((prevResults) => prevResults.concat(data.results));
+                        setHasMore(data.page < data.total_pages);
+                    } else {
+                        setResults(data.results);
+                    }
+                } else {
+                    setResults([]);
+                }
+            });
         }
 
-        fetch(url)
-        .then(res => res.json()).then((data)=> {
-            if(!data.errors){
-                if (changePage){
-                    setResults((prevResults) => prevResults.concat(data.results));
-                    setHasMore(data.page < data.total_pages);
-                } else {
-                    setResults(data.results);
-                }
-            } else {
-                setResults([]);
-            }
-        });
-    }
+        return debounceFunction(getMovie, 500);
+    }, []);  
 
     useEffect(() => {
-        getMovie(query, true);
-    }, [page]);
-
-    useEffect(() => {
-        getMovie(query, false);
-    }, [query]);
+        debouncedFetchData(query, page);
+    }, [query,page]);
 
     return ( 
         <div className="add">
@@ -50,9 +49,11 @@ const Add = () => {
                             className="add__search"
                             type="text" 
                             placeholder="Search for a movie"
+                            aria-label="Search movie"
                             value={query}
                             onChange={(e)=> {
-                                return setQuery(e.target.value);
+                                setPage (1);
+                                setQuery(e.target.value);
                             }}
                         />
                     </div>
@@ -63,16 +64,15 @@ const Add = () => {
                     next={() => setPage((prevPage) => prevPage + 1)}
                 >
                     {results.length > 0 && (
-                        <ul className="add__movies">
-                            {results.map((movie) => (
-                                <li>
-                                    <ResultCard movie={movie} key={movie.id}/>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+                            <ul className="add__movies">
+                                {results.map((movie) => (
+                                    <li>
+                                        <ResultCard movie={movie} key={movie.id}/>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                 </InfiniteScroll>
-
             </div>
         </div>
     );
