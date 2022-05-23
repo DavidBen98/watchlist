@@ -19,18 +19,20 @@ const Add = () => {
             }
         
             fetch(url)
-            .then(res => res.json()).then((data)=> {
-                if(!data.errors){
-                    if (pag !== 1){
-                        setResults((prevResults) => prevResults.concat(data.results));
-                        setHasMore(data.page < data.total_pages);
-                    } else {
-                        setResults(data.results);
+                .then(res => res.json())
+                    .then((data)=> {
+                        if(!data.errors){
+                            if (pag !== 1){
+                                setResults((prevResults) => prevResults.concat(data.results));
+                                setHasMore(data.page < data.total_pages);
+                            } else {
+                                setResults(data.results);
+                            }
+                        } else {
+                            setResults([]);
+                        }
                     }
-                } else {
-                    setResults([]);
-                }
-            });
+            );
         }
 
         return debounceFunction(getMovie, 500);
@@ -39,6 +41,8 @@ const Add = () => {
     useEffect(() => {
         debouncedFetchData(query, page);
     }, [query,page]);
+
+    if (results.length === 0) return "Loading...";
 
     return ( 
         <div className="add">

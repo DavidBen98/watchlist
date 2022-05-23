@@ -89,7 +89,7 @@ const Watched = () => {
                 {watched.length > 0 ? (
                     <div className="movie__grid">
                         {watched.map((movie) => (
-                            <MovieCard movie={movie} seleccionar={seleccionar} moviesselect={moviesselect} type="watched" />
+                            <MovieCard key={movie.id} movie={movie} seleccionar={seleccionar} moviesselect={moviesselect} type="watched" />
                         ))}
                     </div>
                 ) : (

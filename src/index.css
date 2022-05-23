@@ -193,6 +193,7 @@ header .header__nav li:last-child {
   display: flex;
   margin-bottom: 4%;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .resultCard .resultCard__wrapper img {
@@ -200,7 +201,6 @@ header .header__nav li:last-child {
   height: 113px;
   background-color: #dbdada;
   border-radius: 5px;
-  margin-right: 15px;
   display: block;
   color: transparent;
 }
@@ -209,7 +209,8 @@ header .header__nav li:last-child {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 40%;
+  width: 100%;
+  text-align: center;
 }
 
 .resultCard .resultCard__info .resultCard__title {
@@ -381,6 +382,15 @@ header .header__nav li:last-child {
 
   .header__brand{
     width: auto;
+  }
+
+  .resultCard__wrapper img{
+    margin-right: 15px;
+  }
+
+  .resultCard .resultCard__info {
+    width: 40%;
+    text-align: start;
   }
 }
 

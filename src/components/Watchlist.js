@@ -87,7 +87,7 @@ const Watchlist = () => {
                     {watchlist.length > 0 ? (
                         <div className="movie__grid">
                             {watchlist.map((movie) => (
-                                <MovieCard movie={movie} seleccionar={seleccionar} moviesselect={moviesselect} type="watchlist" />
+                                <MovieCard key={movie.id} movie={movie} seleccionar={seleccionar} moviesselect={moviesselect} type="watchlist" />
                             ))}
                         </div>
                     ) : (

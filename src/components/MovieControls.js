@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
+import { FaCheck, FaEyeSlash, FaTimes } from "react-icons/fa";
 
 const MovieControls = ({ movie, type, seleccionar}) => {
     const { 
@@ -21,7 +21,7 @@ const MovieControls = ({ movie, type, seleccionar}) => {
                         }}
                     >
                         <i className="fa-fw far fa-eye">
-                            <FaEye />
+                            <FaCheck />
                         </i>
                     </button>
 
