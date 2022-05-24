@@ -17,7 +17,7 @@ const ResultCard = ({ movie }) => {
 
     const watchedDisabled = storedMovie ? true : storedMovieWatched? true : false;
     return ( 
-        <div className="resultCard">
+        <div className={!watchedDisabled? "resultCard" : "resultCard occult"}>
             <div className="resultCard__wrapper">
                 {movie.poster_path ? (
                     <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}

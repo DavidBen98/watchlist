@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import ResultCard from "./ResultCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import debounceFunction from "./debounceFunction";
+import Loader from "./Loader";
 
 const Add = () => {
     const [query, setQuery] = useState("");
@@ -42,7 +43,7 @@ const Add = () => {
         debouncedFetchData(query, page);
     }, [query,page]);
 
-    if (results.length === 0) return "Loading...";
+    if (results.length === 0) return <Loader />;
 
     return ( 
         <div className="add">
@@ -64,14 +65,14 @@ const Add = () => {
                 </div>
                 <InfiniteScroll
                     dataLength={results.length}
-                    hasMore={true}
+                    hasMore={hasMore}
                     next={() => setPage((prevPage) => prevPage + 1)}
                 >
                     {results.length > 0 && (
                             <ul className="add__movies">
                                 {results.map((movie) => (
-                                    <li>
-                                        <ResultCard movie={movie} key={movie.id}/>
+                                    <li key={movie.id}>
+                                        <ResultCard movie={movie}/>
                                     </li>
                                 ))}
                             </ul>

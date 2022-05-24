@@ -196,6 +196,10 @@ header .header__nav li:last-child {
   flex-wrap: wrap;
 }
 
+.occult{
+  display: none;
+}
+
 .resultCard .resultCard__wrapper img {
   width: 75px;
   height: 113px;
