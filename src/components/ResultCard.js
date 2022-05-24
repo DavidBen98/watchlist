@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import Poster from "../Poster.jpg";
 
-const ResultCard = ({ movie }) => {
+const ResultCard = ({ movie, abrirModal }) => {
     const {
         addMovieToWatchList,
         addMovieToWatched,
@@ -14,8 +14,8 @@ const ResultCard = ({ movie }) => {
     let storedMovieWatched = watched.find ((o) => o.id === movie.id);
 
     const watchlistDisabled = storedMovie ? true : storedMovieWatched? true : false;
-
     const watchedDisabled = storedMovie ? true : storedMovieWatched? true : false;
+    
     return ( 
         <div className={!watchedDisabled? "resultCard" : "resultCard occult"}>
             <div className="resultCard__wrapper">
@@ -42,7 +42,10 @@ const ResultCard = ({ movie }) => {
                 <button 
                     className="btn"
                     disabled={watchlistDisabled}
-                    onClick={() => addMovieToWatchList(movie)}
+                    onClick={() => {
+                        abrirModal ("watchlist");
+                        addMovieToWatchList(movie);
+                    }}
                 >
                     Add to Watchlist
                 </button>
@@ -50,7 +53,7 @@ const ResultCard = ({ movie }) => {
                 <button 
                     className="btn"
                     disabled={watchedDisabled}
-                    onClick={() => addMovieToWatched(movie)}
+                    onClick={() => {abrirModal ("watched") ;addMovieToWatched(movie)}}
                 >
                     Add to Watched
                 </button>

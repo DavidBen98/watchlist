@@ -1,9 +1,11 @@
 import React from 'react';
 import "./Loader.css";
 
-const Loader = () => {
+const Loader = ({margin}) => {
+    let styled = margin? {marginTop: "45vh"} : {};
+
     return ( 
-        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <div className="lds-ring" style={styled}><div></div><div></div><div></div><div></div></div>
     );
 }
  

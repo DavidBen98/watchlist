@@ -3,6 +3,8 @@ import ResultCard from "./ResultCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import debounceFunction from "./debounceFunction";
 import Loader from "./Loader";
+import { useModal } from "../hooks/useModal";
+import Modal from "./Modal";
 
 const Add = () => {
     const [query, setQuery] = useState("");
@@ -10,6 +12,17 @@ const Add = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
+
+    const [isOpenModal1,openModal1,closeModal1] = useModal(false);
+    const [isOpenModal2,openModal2,closeModal2] = useModal(false);
+
+    const abrirModal = (type) => {
+        if (type === "watchlist"){
+            openModal1();
+        } else {
+            openModal2();
+        }
+    }
 
     const debouncedFetchData = useMemo (function () {
         function getMovie (inputValue, pag) {
@@ -29,12 +42,11 @@ const Add = () => {
                                 setHasMore(data.page < data.total_pages);
                             } else {
                                 setResults(data.results);
+                                setIsLoading(false);
                             }
                         } else {
                             setResults([]);
-                        }
-
-                        setIsLoading(false);
+                        }                
                     }
             );
         }
@@ -43,11 +55,13 @@ const Add = () => {
     }, []);  
 
     useEffect(() => {
-        setIsLoading(true);
+        if (page === 1){
+            setIsLoading(true);
+        }
         debouncedFetchData(query, page);
     }, [query,page]);
 
-    if (results.length === 0) return <Loader />;
+    if (results.length === 0) return <Loader margin={true}/>;
 
     return ( 
         <div className="add">
@@ -75,16 +89,21 @@ const Add = () => {
                         hasMore={hasMore}
                         next={() => setPage((prevPage) => prevPage + 1)}
                     >
+                            
                         {results.length > 0 && (
-                                <ul className="add__movies">
-                                    {results.map((movie) => (
-                                        <li key={movie.id}>
-                                            <ResultCard movie={movie}/>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
+                            <ul className="add__movies">
+                                {results.map((movie) => (
+                                    <li key={movie.id}>
+                                        <ResultCard movie={movie} abrirModal={abrirModal}/>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+
+                        <Modal isOpen={isOpenModal1} closeModal={closeModal1} type={"watchlist"} />
+                        <Modal isOpen={isOpenModal2} closeModal={closeModal2} type={"watched"} />
                     </InfiniteScroll>
+                    
                 }
             </div>
         </div>
