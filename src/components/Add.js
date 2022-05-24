@@ -9,6 +9,7 @@ const Add = () => {
     const [results, setResults] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     const debouncedFetchData = useMemo (function () {
         function getMovie (inputValue, pag) {
@@ -32,6 +33,8 @@ const Add = () => {
                         } else {
                             setResults([]);
                         }
+
+                        setIsLoading(false);
                     }
             );
         }
@@ -40,6 +43,7 @@ const Add = () => {
     }, []);  
 
     useEffect(() => {
+        setIsLoading(true);
         debouncedFetchData(query, page);
     }, [query,page]);
 
@@ -63,21 +67,25 @@ const Add = () => {
                         />
                     </div>
                 </div>
-                <InfiniteScroll
-                    dataLength={results.length}
-                    hasMore={hasMore}
-                    next={() => setPage((prevPage) => prevPage + 1)}
-                >
-                    {results.length > 0 && (
-                            <ul className="add__movies">
-                                {results.map((movie) => (
-                                    <li key={movie.id}>
-                                        <ResultCard movie={movie}/>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                </InfiniteScroll>
+
+                {isLoading? 
+                    <Loader /> : 
+                    <InfiniteScroll
+                        dataLength={results.length}
+                        hasMore={hasMore}
+                        next={() => setPage((prevPage) => prevPage + 1)}
+                    >
+                        {results.length > 0 && (
+                                <ul className="add__movies">
+                                    {results.map((movie) => (
+                                        <li key={movie.id}>
+                                            <ResultCard movie={movie}/>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                    </InfiniteScroll>
+                }
             </div>
         </div>
     );
