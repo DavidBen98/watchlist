@@ -8,13 +8,13 @@ const Modal = ({type, isOpen, closeModal}) => {
         <article className={`modal ${isOpen && "is-open"}`} onClick={closeModal}>
             <div className="modal-container" onClick={handleModalContainerClick}>
                 <button className="btn modal-close" onClick={closeModal}>X</button>    
-                <h3>¡La película ha sido añadida a {type} exitosamente!</h3>
+                <h3>¡The movie has been added to the {type} successfully!</h3>
                 <div className="modal__action">
                     {type==="watched"? 
-                        <Link to="/watched" className="btn">Ir a {type}</Link> : 
-                        <Link to="/" className="btn">Ir a {type}</Link>
+                        <Link to="/watched" className="btn">Go to {type}</Link> : 
+                        <Link to="/" className="btn">Go to {type}</Link>
                     }
-                    <button className="btn" onClick={closeModal}> Aceptar </button>
+                    <button className="btn" onClick={closeModal}> Accept </button>
                 </div>
             </div>
         </article>
